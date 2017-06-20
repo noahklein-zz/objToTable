@@ -1,41 +1,28 @@
-objToTable = (function() {
+export const makeTd = (text) => {
+  const td = document.createElement('td');
+  const textNode = document.createTextNode(text);
+  td.appendChild(textNode);
+  return td;
+};
 
-    return {
-        makeTable: makeTable,
-        makeTbody: makeTbody,
-        makeRow: makeRow,
-        makeTd: makeTd
-    };
+export const makeRow = (key, val) => {
+  const tr = document.createElement('tr');
+  tr.appendChild(makeTd(key));
+  tr.appendChild(makeTd(val));
+  return tr;
+};
 
-    function makeTable(obj) {
-        var table = document.createElement('table');
-        table.appendChild(makeTbody(obj));
-        return table;
-    }
+export const makeTbody = (obj) => {
+  const tbody = document.createElement('tbody');
+  Object.keys(obj).forEach((key) => {
+    const row = makeRow(key, obj[key]);
+    tbody.appendChild(row);
+  });
+  return tbody;
+};
 
-
-    function makeTbody(obj) {
-        var tbody = document.createElement('tbody');
-        Object.keys(obj).forEach(function(key) {
-            var row = makeRow(key, obj[key]);
-            tbody.appendChild(row);
-        });
-        return tbody;
-    }
-
-    function makeRow(key, val) {
-        var tr = document.createElement('tr');
-        tr.appendChild(makeTd(key));
-        tr.appendChild(makeTd(val));
-        return tr;
-    }
-
-    function makeTd(text) {
-        var td = document.createElement('td'),
-            text = document.createTextNode(text);
-        td.appendChild(text);
-        return td;
-    }
-
-})();
-
+export const makeTable = (obj) => {
+  const table = document.createElement('table');
+  table.appendChild(makeTbody(obj));
+  return table;
+};
